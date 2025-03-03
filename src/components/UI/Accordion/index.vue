@@ -16,7 +16,8 @@ const isOpen = ref(false);
 
 <template>
   <section
-    class="bg-white p-5 flex flex-col gap-5 w-full h-fit rounded-lg transition-all duration-300"
+    class="bg-white p-5 gap-5 flex flex-col w-full h-fit transition-all duration-300"
+    :class="{ 'rounded-lg': !customHeader }"
   >
     <!-- Default view -->
     <header class="h-fit cursor-pointer" @click="isOpen = !isOpen">
@@ -42,7 +43,7 @@ const isOpen = ref(false);
       </slot>
     </header>
     <!-- Opened view -->
-    <section v-if="isOpen">
+    <section v-if="isOpen" class="px-2" :class="{ 'border border-gray-300 rounded-lg': !customHeader }">
       <slot name="opened" />
     </section>
   </section>
