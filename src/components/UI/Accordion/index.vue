@@ -1,0 +1,49 @@
+<script lang="ts" setup>
+// Core
+import { ref } from "vue";
+
+// Types
+import type { IProps } from "./index.model";
+
+// Composables
+withDefaults(defineProps<IProps>(), {
+  customHeader: false
+})
+
+// Variables
+const isOpen = ref(false);
+</script>
+
+<template>
+  <section
+    class="bg-white p-5 flex flex-col gap-5 w-full h-fit rounded-lg transition-all duration-300"
+  >
+    <!-- Default view -->
+    <header class="h-fit cursor-pointer" @click="isOpen = !isOpen">
+      <slot name="header" :isOpen>
+        <section class="w-full flex justify-between">
+          <section class="flex flex-col gap-2">
+            <section class="flex gap-5 items-center">
+              <img class="size-3.5" src="@/assets/icons/subtract.svg" alt="" v-if="isOpen && customHeader">
+              <img class="size-3.5" src="@/assets/icons/add.svg" alt="" v-if="!isOpen && customHeader">
+              <p class="font-semibold text-lg" :class="{ 'font-medium text-sm': customHeader}">{{ title }}</p>
+              </section>
+            <slot name="subtitle" />
+          </section>
+
+          <img
+            v-if="!customHeader"
+            src="@/assets/icons/arrow.svg"
+            alt="Ícone de seta."
+            class="transition-all duration-300 size-5"
+            :class="{ 'rotate-180': isOpen }"
+          />
+        </section>
+      </slot>
+    </header>
+    <!-- Opened view -->
+    <section v-if="isOpen">
+      <slot name="opened" />
+    </section>
+  </section>
+</template>
