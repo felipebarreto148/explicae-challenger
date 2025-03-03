@@ -12,6 +12,9 @@ defineProps<IProps>();
 const Courses = defineAsyncComponent(
   () => import("@/components/Courses/index.vue")
 );
+const Subtitle = defineAsyncComponent(
+  () => import("@/components/Base/Subtitle/index.vue")
+);
 const UIAccordion = defineAsyncComponent(
   () => import("@/components/UI/Accordion/index.vue")
 );
@@ -25,6 +28,9 @@ const UIAccordion = defineAsyncComponent(
       :title="course.title"
       :custom-header="customHeader"
     >
+      <template #subtitle>
+        <Subtitle :module="course" />
+      </template>
       <template #opened>
         <Courses v-if="course?.modules" :module="course.modules" :custom-header="true" />
       </template>

@@ -3,7 +3,7 @@
 import { defineAsyncComponent } from "vue";
 
 // Variables
-import { courses } from "@/database/db.json";
+import { courses } from "@/database/db";
 
 // Components
 const BaseHeader = defineAsyncComponent(
@@ -15,7 +15,7 @@ const Courses = defineAsyncComponent(
 </script>
 
 <template>
-  <main class="flex flex-col gap-5 px-5">
+  <main class="flex flex-col gap-5 px-5 pb-5 size-full overflow-auto">
     <BaseHeader />
     <Courses :module="courses" />
   </main>

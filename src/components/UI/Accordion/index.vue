@@ -16,8 +16,8 @@ const isOpen = ref(false);
 
 <template>
   <section
-    class="bg-white p-5 gap-5 flex flex-col w-full h-fit transition-all duration-300"
-    :class="{ 'rounded-lg': !customHeader }"
+    class="bg-white px-3 py-4 gap-5 flex flex-col w-full h-fit transition-all duration-300"
+    :class="{ 'rounded-lg': !customHeader, 'not-last:border-b border-b-gray-300': customHeader }"
   >
     <!-- Default view -->
     <header class="h-fit cursor-pointer" @click="isOpen = !isOpen">
