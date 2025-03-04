@@ -1,12 +1,16 @@
 <script lang="ts" setup>
 // Core
-import { defineAsyncComponent } from "vue";
+import { defineAsyncComponent, ref, type Ref } from "vue";
 
 // Types
-import type { IProps } from "./indx.model";
+import type { IModule, IProps } from "./indx.model";
+
+// Stores
+import { useCoursesStore } from "@/stores/courses";
+const useCourses = useCoursesStore();
 
 // Composables
-defineProps<IProps>();
+const props = defineProps<IProps>();
 
 // Components
 const Courses = defineAsyncComponent(
@@ -18,12 +22,23 @@ const Subtitle = defineAsyncComponent(
 const UIAccordion = defineAsyncComponent(
   () => import("@/components/UI/Accordion/index.vue")
 );
+
+// Variables
+const data: Ref<IModule[]> = ref([]);
+
+// Functions
+async function onCreated() {
+  data.value = useCourses.getCourses(props.parent_id);
+}
+
+// Lifecycle hooks
+onCreated();
 </script>
 
 <template>
   <main class="flex flex-col gap-3">
     <UIAccordion
-      v-for="(course, index) in module"
+      v-for="(course, index) in data"
       :key="index"
       :title="course.title"
       :custom-header="customHeader"
@@ -32,7 +47,7 @@ const UIAccordion = defineAsyncComponent(
         <Subtitle :module="course" />
       </template>
       <template #opened>
-        <Courses v-if="course?.modules" :module="course.modules" :custom-header="true" />
+        <Courses :parent_id="course.id" :custom-header="true" />
       </template>
     </UIAccordion>
   </main>
